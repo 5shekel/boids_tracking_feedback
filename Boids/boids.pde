@@ -6,10 +6,10 @@ import com.nootropic.processing.layers.*;
  * ---------
  * 12/14/09: Started work
  * 12/18/09: Reimplemented with BoidList class
+ * 12/07/10: http://github.com/yoshco/boids_tracking_feedback
  */
 
-int initBoidNum = 5; //amount of boids to start the program with
-BoidList flock1,flock2;
+BoidList flock1;
 
 AppletLayers layers;
 
@@ -21,8 +21,7 @@ void setup()
   layers.addLayer(m);
 
   //create and fill the list of boids
-  flock1 = new BoidList(initBoidNum,0);
-  flock2 = new BoidList(100,255);
+  flock1 = new BoidList(100,255);
 
 }
 
@@ -32,7 +31,6 @@ void draw()
   fill(0,1);
   rect(0,0,width,height);
   flock1.run();
-  flock2.run();
 
   //smooth();
 }
