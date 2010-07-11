@@ -1,3 +1,5 @@
+import com.nootropic.processing.layers.*;
+
 /*Main runner area
  * Matt Wetmore
  * Changelog
@@ -8,46 +10,42 @@
 
 int initBoidNum = 5; //amount of boids to start the program with
 BoidList flock1,flock2;
-PGraphics buffer;
+
+AppletLayers layers;
 
 void setup()
 {
-  size(500,400,P2D);
+  size(500,400,P3D);
+  layers = new AppletLayers(this);
+  mouseLayer m = new mouseLayer(this);
+  layers.addLayer(m);
+
   //create and fill the list of boids
   flock1 = new BoidList(initBoidNum,0);
   flock2 = new BoidList(100,255);
 
-  buffer = createGraphics(width, height, P3D);  
 }
 
 void draw()
 {
-  //clear screen
-  // background(205,100);
 
   fill(0,1);
   rect(0,0,width,height);
-  
-
-  buffer.beginDraw();
-  buffer.noStroke();   
-  buffer.fill(0,10);
-  buffer.rect(0, 0, width, height);     //Rect. size and position
-  buffer.fill(255,100);
-  buffer.ellipse(mouseX,mouseY,30,30);
-  buffer.ellipse(mouseX+150,mouseY+150,30,30);
-  buffer.endDraw();
-  image(buffer, 0, 0);
-
-flock1.run();
+  flock1.run();
   flock2.run();
 
   //smooth();
-
-  //print framerate
-  //println(frameRate); 
 }
 
+void paint() {
+  // This method MUST be present in your sketch for layers to be rendered!
+  if (layers != null) {
+    layers.paint(this);
+  } 
+  else {
+    super.paint();
+  }
+}
 
 //this does nothing. saving until I implement
 /*void keyPressed()
@@ -63,5 +61,6 @@ flock1.run();
  default: return;
  }
  }*/
+
 
 
